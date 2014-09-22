@@ -9,6 +9,6 @@ class Document < ActiveRecord::Base
   private
 
   def create_rows_from_file
-    CreateRowsService.new(self).perform
+    CreateRowsService.new(self).perform if self.file.present?
   end
 end
