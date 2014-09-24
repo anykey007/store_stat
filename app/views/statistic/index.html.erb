@@ -23,7 +23,7 @@ $(document).ready(function() {
   var baseOptions = {
     domain: "year",
     subDomain: "<%= raw @sub_domain %>" || "month",
-    start: new Date(2013, 0),
+    start: new Date(2014, 0),
     cellSize: 25,
     rowLimit: 7,
     range: 1,
@@ -54,7 +54,7 @@ $(document).ready(function() {
     itemSelector: "#repeating_visitors",
     data: <%= raw @repeating_visitors_data.to_json %>,
     legend: [10, 30, 60, 90],
-    itemName: ["percent", "percents"]
+    itemName: ["%", "%"]
   }));
 
   $( "#stat-period").change(function() {
