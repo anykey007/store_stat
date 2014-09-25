@@ -78,8 +78,8 @@ end
 
 group :development, :test do
   gem 'factory_girl_rails'
-  gem 'pry-rails'
-  gem 'pry-rescue'
+  gem 'pry'
+  gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'thin'
 end
