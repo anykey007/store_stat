@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount API::Base => '/api'
+
   get 'statistic' => 'statistic#index', :as => :statistic
 
   resources :documents

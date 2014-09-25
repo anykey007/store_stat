@@ -56,7 +56,7 @@ $(document).ready(function() {
   var average_dwell_time = new CalHeatMap();
   average_dwell_time.init($.extend({}, baseOptions, {
     itemSelector: "#average_dwell_time",
-    data: <%= raw @average_dwell_time.to_json %>,
+    data: "api/statistic/average_dwell_time?sub=" + baseOptions.subDomain,
     legend: [20, 40, 60, 100],
     itemName: ["minute", "minutes"]
   }));
@@ -64,7 +64,7 @@ $(document).ready(function() {
   var unique_visitors = new CalHeatMap();
   unique_visitors.init($.extend({}, baseOptions, {
     itemSelector: "#unique_visitors",
-    data: <%= raw @unique_visitors_count.to_json %>,
+    data: "api/statistic/unique_visitors?sub=" + baseOptions.subDomain,
     legend: [5, 10, 50, 100],
     itemName: ["visitor", "visitors"]
   }));
@@ -72,7 +72,7 @@ $(document).ready(function() {
   var repeating_visitors = new CalHeatMap();
   repeating_visitors.init($.extend({}, baseOptions, {
     itemSelector: "#repeating_visitors",
-    data: <%= raw @repeating_visitors_data.to_json %>,
+    data: "api/statistic/repeating_visitors?sub=" + baseOptions.subDomain,
     legend: [10, 30, 60, 90],
     itemName: ["%", "%"]
   }));

@@ -36,6 +36,10 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
+    axiom-types (0.1.1)
+      descendants_tracker (~> 0.0.4)
+      ice_nine (~> 0.11.0)
+      thread_safe (~> 0.3, >= 0.3.1)
     better_errors (2.0.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -78,6 +82,8 @@ GEM
     cocaine (0.5.4)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.0)
+    coercible (1.0.0)
+      descendants_tracker (~> 0.0.1)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -92,7 +98,10 @@ GEM
     database_cleaner (1.3.0)
     debug_inspector (0.0.2)
     debugger-linecache (1.2.0)
+    descendants_tracker (0.0.4)
+      thread_safe (~> 0.3, >= 0.3.1)
     diff-lcs (1.2.5)
+    equalizer (0.0.9)
     erubis (2.7.0)
     eventmachine (1.0.3)
     execjs (2.2.1)
@@ -107,6 +116,16 @@ GEM
       multipart-post (>= 1.2, < 3)
     ffi (1.9.3)
     formatador (0.2.5)
+    grape (0.9.0)
+      activesupport
+      builder
+      hashie (>= 2.1.0)
+      multi_json (>= 1.3.2)
+      multi_xml (>= 0.5.2)
+      rack (>= 1.3.0)
+      rack-accept
+      rack-mount
+      virtus (>= 1.0.0)
     guard (2.6.1)
       formatador (>= 0.2.4)
       listen (~> 2.7)
@@ -137,6 +156,7 @@ GEM
       hpricot (~> 0.8.6)
       ruby_parser (~> 3.1.1)
     i18n (0.6.11)
+    ice_nine (0.11.0)
     jbuilder (2.1.3)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -210,6 +230,10 @@ GEM
     quiet_assets (1.0.3)
       railties (>= 3.1, < 5.0)
     rack (1.5.2)
+    rack-accept (0.4.5)
+      rack (>= 0.4)
+    rack-mount (0.8.3)
+      rack (>= 1.0.0)
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.1.4)
@@ -336,6 +360,11 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    virtus (1.0.3)
+      axiom-types (~> 0.1)
+      coercible (~> 1.0)
+      descendants_tracker (~> 0.0, >= 0.0.3)
+      equalizer (~> 0.0, >= 0.0.9)
     websocket (1.2.1)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -358,6 +387,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   figaro!
+  grape
   guard-bundler
   guard-rails
   guard-rspec

@@ -53,6 +53,7 @@ gem 'pundit'
 gem 'simple_form'
 gem 'slim-rails'
 gem 'paperclip', '~> 4.2'
+gem 'grape'
 
 group :development do
   gem 'better_errors'
