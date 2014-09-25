@@ -1,5 +1,5 @@
 module API
-  class Statistic < Grape::API
+  class StatisticApi < Grape::API
     # Set all output formats to json
     # NOTE: always functions should return hash!!!
     format :json
