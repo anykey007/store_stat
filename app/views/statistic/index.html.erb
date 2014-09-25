@@ -36,13 +36,15 @@ $(document).ready(function() {
     subDomain: "<%= raw @sub_domain %>" || "month",
     start: new Date(2014, 0),
     cellSize: 25,
-    rowLimit: 7,
     range: 1,
     previousSelector: "#previousSelector-a-previous",
     nextSelector: "#previousSelector-a-next",
     // subDomainTextFormat: subDomainTextFormat(),
     tooltip: true
   };
+  if(baseOptions.subDomain==='week'){
+    $.extend(baseOptions, { rowLimit: 7 });
+  }
 
   var average_dwell_time = new CalHeatMap();
   average_dwell_time.init($.extend(baseOptions, {
