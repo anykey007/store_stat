@@ -1,5 +1,16 @@
 <div style="width: 50%; margin: 0 auto;">
-  <%= select_tag "stat-period", options_for_select([["per month", "month"], ["per week", "week"], ["per day", "day"]], @sub_domain) %>
+  <div class="btn-group">
+    <button type="button" class="btn btn-primary">Period</button>
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+      <span class="caret"></span>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="?sub=month">Per month</a></li>
+      <li><a href="?sub=week">Per week</a></li>
+      <li><a href="?sub=day">Per day</a></li>
+    </ul>
+  </div>
   <div class="stat-block">
     <h1>average dwell time</h1>
     <div id="average_dwell_time"></div>
