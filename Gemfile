@@ -76,8 +76,10 @@ group :development do
   gem 'rb-inotify', :require=>false
 end
 
+gem 'factory_girl_rails'
+gem 'faker'
+
 group :development, :test do
-  gem 'factory_girl_rails'
   gem 'pry'
   gem 'pry-byebug'
   gem 'rspec-rails'
@@ -91,7 +93,6 @@ end
 group :test do
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'faker'
   gem 'launchy'
   gem 'selenium-webdriver'
 end
