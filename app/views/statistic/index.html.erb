@@ -10,6 +10,11 @@
       <li><a href="?sub=week">Per week</a></li>
       <li><a href="?sub=day">Per day</a></li>
     </ul>
+    <div style="float:left;margin: 0 10px;">
+      <button class="btn" id="navigationSelector-previous">Previous</button>
+      <button class="btn" id="navigationSelector-next">Next</button>
+      <div class="source"></div>
+    </div>
   </div>
   <div class="stat-block">
     <h1>average dwell time</h1>
@@ -26,24 +31,28 @@
 </div>
 <style type="text/css">
   .stat-block {
-    padding-bottom: 100px;
+    padding-bottom: 30px;
   }
 </style>
 <script type="text/javascript">
 $(document).ready(function() {
   var baseOptions = {
-    domain: "year",
     subDomain: "<%= raw @sub_domain %>" || "month",
     start: new Date(2014, 0),
     cellSize: 25,
-    range: 1,
-    previousSelector: "#previousSelector-a-previous",
-    nextSelector: "#previousSelector-a-next",
+    previousSelector: "#navigationSelector-previous",
+    nextSelector: "#navigationSelector-next",
     // subDomainTextFormat: subDomainTextFormat(),
     tooltip: true
   };
+  if(baseOptions.subDomain==='month'){
+    $.extend(baseOptions, { domain: "year", range: 1});
+  }
   if(baseOptions.subDomain==='week'){
-    $.extend(baseOptions, { rowLimit: 7 });
+    $.extend(baseOptions, { domain: "month", range: 4 });
+  }
+  if(baseOptions.subDomain==='day'){
+    $.extend(baseOptions, { domain: "month", range: 4});
   }
 
   var average_dwell_time = new CalHeatMap();
@@ -70,8 +79,14 @@ $(document).ready(function() {
     itemName: ["%", "%"]
   }));
 
-  $( "#stat-period").change(function() {
-    window.location='?sub=' + this.value;
+  var allCharts = [average_dwell_time, unique_visitors, repeating_visitors];
+
+  $("#navigationSelector-next").on("click", function(event) {
+    $.map(allCharts, function( val, i ) { val.next(baseOptions.range); });
+  });
+
+  $("#navigationSelector-previous").on("click", function(event) {
+    $.map(allCharts, function( val, i ) { val.previous(baseOptions.range); });
   });
 
   function subDomainTextFormat(){
