@@ -40,8 +40,6 @@ $(document).ready(function() {
     subDomain: "<%= raw @sub_domain %>" || "month",
     start: new Date(2014, 0),
     cellSize: 25,
-    previousSelector: "#navigationSelector-previous",
-    nextSelector: "#navigationSelector-next",
     // subDomainTextFormat: subDomainTextFormat(),
     tooltip: true
   };
@@ -56,7 +54,7 @@ $(document).ready(function() {
   }
 
   var average_dwell_time = new CalHeatMap();
-  average_dwell_time.init($.extend(baseOptions, {
+  average_dwell_time.init($.extend({}, baseOptions, {
     itemSelector: "#average_dwell_time",
     data: <%= raw @average_dwell_time.to_json %>,
     legend: [20, 40, 60, 100],
@@ -64,7 +62,7 @@ $(document).ready(function() {
   }));
 
   var unique_visitors = new CalHeatMap();
-  unique_visitors.init($.extend(baseOptions, {
+  unique_visitors.init($.extend({}, baseOptions, {
     itemSelector: "#unique_visitors",
     data: <%= raw @unique_visitors_count.to_json %>,
     legend: [5, 10, 50, 100],
@@ -72,7 +70,7 @@ $(document).ready(function() {
   }));
 
   var repeating_visitors = new CalHeatMap();
-  repeating_visitors.init($.extend(baseOptions, {
+  repeating_visitors.init($.extend({}, baseOptions, {
     itemSelector: "#repeating_visitors",
     data: <%= raw @repeating_visitors_data.to_json %>,
     legend: [10, 30, 60, 90],
