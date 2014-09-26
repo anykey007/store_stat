@@ -1,4 +1,5 @@
 class Document < ActiveRecord::Base
+  belongs_to :store
   has_many :rows, :dependent => :destroy
 
   has_attached_file :file

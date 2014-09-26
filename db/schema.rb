@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919095721) do
+ActiveRecord::Schema.define(version: 20140926190732) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,10 @@ ActiveRecord::Schema.define(version: 20140919095721) do
     t.string   "file_content_type"
     t.integer  "file_file_size"
     t.datetime "file_updated_at"
+    t.integer  "store_id"
   end
+
+  add_index "documents", ["store_id"], name: "index_documents_on_store_id", using: :btree
 
   create_table "rows", force: true do |t|
     t.datetime "visit_data"
@@ -42,5 +45,11 @@ ActiveRecord::Schema.define(version: 20140919095721) do
   end
 
   add_index "rows", ["document_id"], name: "index_rows_on_document_id", using: :btree
+
+  create_table "stores", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

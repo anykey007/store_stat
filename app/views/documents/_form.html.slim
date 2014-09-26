@@ -1,4 +1,7 @@
 = simple_form_for @document, :html => { :class => "form-horizontal" } do |f|
+  = f.association :store, collection: Store.first(10)
+  = error_span(@document[:store_id])
+
   = f.input :file, as: :file
   = error_span(@document[:file])
 

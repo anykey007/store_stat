@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'statistic' => 'statistic#index', :as => :statistic
   get 'stat_tables' => 'statistic#stat_tables', :as => :stat_tables
 
+  resources :stores
   resources :documents
 
   # The priority is based upon order of creation: first created -> highest priority.
