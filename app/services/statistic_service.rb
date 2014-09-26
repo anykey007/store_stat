@@ -1,4 +1,10 @@
 class StatisticService
+  PERIOD_TYPES    = ['month', 'week', 'day']
+  STATISTIC_NAMES = ['avg_dwell_time', 'unique_visitors_count', 'repeating_visitors_count']
+  VIEW_NAME       = STATISTIC_NAMES.map { |name| "#{name}_view" }
+  PROC_NAMES      = STATISTIC_NAMES.map { |name| "create_#{name}_view()" }
+  STATISTIC_MAP   = Hash[VIEW_NAME.zip PROC_NAMES]
+
   attr_reader :document_ids, :sub_domain
 
   def initialize opts = {}
@@ -8,46 +14,27 @@ class StatisticService
 
   def average_dwell_time
     query = <<-SQL
-      SELECT #{date_part(date_trunc)} AS date_label,
-        #{pg_round('AVG(a)', 2)} AS average_dwell_time
-      FROM rows
+      SELECT date_label, average_dwell_time
+      FROM avg_dwell_time_view
       WHERE #{where_condition}
-      GROUP BY #{date_trunc}
     SQL
     build_responce(select_rows(query))
   end
 
   def unique_visitors_count
     query = <<-SQL
-      SELECT DISTINCT
-        #{date_part('t_1.date_label')},
-        count(*)
-      FROM (
-        SELECT DISTINCT
-          mac_address,
-          #{date_trunc} AS date_label
-        FROM rows
-        WHERE #{where_condition}
-        GROUP BY mac_address, #{date_trunc}
-        ) t_1
-      GROUP BY t_1.date_label
+      SELECT date_part, count
+      FROM unique_visitors_count_view
+      WHERE #{where_condition}
     SQL
     build_responce(select_rows(query))
   end
 
   def repeating_visitors_count
     query = <<-SQL
-      SELECT DISTINCT
-        #{date_part('t_1.date_label')},
-        count(*)
-      FROM (
-        SELECT mac_address, #{date_trunc} AS date_label
-        FROM rows
-        WHERE #{where_condition}
-        GROUP BY mac_address, #{date_trunc}
-        HAVING count(mac_address) > 1
-      ) t_1
-      GROUP BY t_1.date_label
+      SELECT date_part, count
+      FROM repeating_visitors_count_view
+      WHERE #{where_condition}
     SQL
     build_responce(select_rows(query))
   end
@@ -61,19 +48,7 @@ class StatisticService
   private
 
   def where_condition
-    @document_ids.any? ? "document_id IN (#{@document_ids.join(',')})": "TRUE"
-  end
-
-  def date_trunc
-    "date_trunc('#{@sub_domain}',visit_data)"
-  end
-
-  def date_part value
-    "date_part('epoch',#{value})"
-  end
-
-  def pg_round(value, places)
-    "round(#{value}, #{places})"
+    "type = '#{@sub_domain}'"
   end
 
   def select_values(*args)

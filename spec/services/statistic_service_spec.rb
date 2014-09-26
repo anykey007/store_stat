@@ -107,6 +107,7 @@ RSpec.describe StatisticService, :type => :model do
 
   let!(:monthly_statistic) { StatisticService.new(sub_domain: 'month') }
   let!(:week_statistic)  { StatisticService.new(sub_domain: 'week')  }
+  let!(:perform) { StoreProceduresService.new.perform }
 
   describe "#average_dwell_time" do
     it 'counts avarage values grouped by month', :focus=>true do
