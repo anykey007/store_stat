@@ -1,0 +1,146 @@
+<div id="datatable"></div>
+
+<style>
+table {
+  border-collapse: collapse;
+}
+th {
+  border-bottom: 2px solid #ddd;
+  padding: 8px;
+  font-weight: bold;
+}
+td {
+  padding: 8px;
+  border-top: 1px solid #ddd;
+}
+#chart {
+  padding: 0px;
+}
+.xaxislabel {
+  font-size: 9px;
+}
+</style>
+
+<script>
+var rows = []
+var subDomain = "<%= raw @sub_domain %>";
+var formatdate;
+if(subDomain==='month'){
+  formatdate = d3.time.format("%b %Y");
+} else {
+  formatdate = d3.time.format("%b %d %Y");
+}
+d3.json("api/statistic/all?sub="+subDomain, function(error, csv) {
+  d3.keys(csv.average_dwell_time).forEach(function(key) {
+    row = {};
+    row.dt = formatdate(new Date(parseInt(key)*1000));
+    row.adt = parseFloat(csv.average_dwell_time[key]).toFixed(2);
+    row.uvc = parseFloat(csv.unique_visitors_count[key]).toFixed(2);
+    row.rvp = parseFloat(csv.repeating_visitors_percent[key] || 0.0).toFixed(2);
+    rows.push(row);
+  });
+
+  var table = d3.select("#datatable").append("table");
+      thead = table.append("thead");
+      tbody = table.append("tbody");
+
+  thead.append("th").text("Date");
+  thead.append("th").text("Avg time");
+  thead.append("th").text("Unique visitors");
+  thead.append("th").text("Repeating visitors (%)");
+  thead.append("th").text("");
+
+  var tr = tbody.selectAll("tr")
+      .data(rows)
+      .enter().append("tr");
+
+  var td = tr.selectAll("td")
+        .data(function(d) { return [d.dt, d.adt, d.uvc, d.rvp]; })
+      .enter().append("td")
+        .text(function(d) { return d; });
+
+  var width = 80,
+      height = d3.select("table")[0][0].clientHeight,
+      mx = 10,
+      radius = 2;
+
+  var addChart = function(type){
+    // Now add the chart column
+    d3.select("#datatable tbody tr").append("td")
+      .attr("id", "chart"+type)
+      .attr("width", width + "px")
+      .attr("rowspan", rows.length);
+
+    var chart = d3.select("#chart"+type).append("svg")
+      .attr("class", "chart")
+      .attr("width", width)
+      .attr("height", height);
+
+    var maxMu = 0;
+    var minMu = Number.MAX_VALUE;
+    for (i=0; i < rows.length; i++) {
+      if (rows[i][type] > maxMu) { maxMu = rows[i][type]; }
+      if (rows[i][type] < minMu) { minMu = rows[i][type]; }
+    }
+
+    var dates = rows.map(function(t) { return t.dt; });
+
+    var xscale = d3.scale.linear()
+      .domain([minMu, maxMu])
+      .range([mx, width-mx])
+      .nice();
+
+    var yscale = d3.scale.ordinal()
+      .domain(dates)
+      .rangeBands([0, height]);
+
+    chart.selectAll(".xaxislabel")
+        .data(xscale.ticks(2))
+      .enter().append("text")
+        .attr("class", "xaxislabel")
+        .attr("x", function(d) { return xscale(d); })
+        .attr("y", 10)
+        .attr("text-anchor", "middle")
+        .text(String)
+
+    chart.selectAll(".xaxistick")
+        .data(xscale.ticks(2))
+      .enter().append("line")
+        .attr("x1", function(d) { return xscale(d); })
+        .attr("x2", function(d) { return xscale(d); })
+        .attr("y1", 10)
+        .attr("y2", height)
+        .attr("stroke", "#eee")
+        .attr("stroke-width", 1);
+
+    chart.selectAll(".line")
+        .data(rows)
+      .enter().append("line")
+        .attr("x1", function(d) { return xscale(d[type]); })
+        .attr("y1", function(d) { return yscale(d.dt) + yscale.rangeBand()/2; })
+        .attr("x2", function(d,i) { return rows[i+1] ? xscale(rows[i+1][type]) : xscale(d[type]); })
+        .attr("y2", function(d,i) { return rows[i+1] ? yscale(rows[i+1].dt) + yscale.rangeBand()/2 : yscale(d.dt) + yscale.rangeBand()/2; })
+        .attr("stroke", "#777")
+        .attr("stroke-width", 1);
+
+    var pt = chart.selectAll(".pt")
+        .data(rows)
+      .enter().append("g")
+        .attr("class", "pt")
+        .attr("transform", function(d) { return "translate(" + xscale(d[type]) + "," + (yscale(d.dt) + yscale.rangeBand()/2) + ")"; });
+
+    pt.append("circle")
+        .attr("cx", 0)
+        .attr("cy", 0)
+        .attr("r", radius)
+        .attr("opacity", .5)
+        .attr("fill", "#ff0000");
+  };
+
+  addChart('adt');
+  addChart('uvc');
+  addChart('rvp');
+});
+</script>
+</body>
+</html>

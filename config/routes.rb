@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   mount API::Base => '/api'
 
   get 'statistic' => 'statistic#index', :as => :statistic
+  get 'stat_tables' => 'statistic#stat_tables', :as => :stat_tables
 
   resources :documents
 
