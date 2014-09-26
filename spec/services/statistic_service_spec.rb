@@ -95,8 +95,6 @@ RSpec.describe StatisticService, :type => :model do
   let!(:sep_2012_rows) do
     rows = []
     rows << create(:row, document: document, mac_address: mac_address_1, visit_data: sep_22_2012)
-    rows << create(:row, document: document, mac_address: mac_address_2, visit_data: sep_22_2012)
-    rows << create(:row, document: document, mac_address: mac_address_2, visit_data: sep_22_2012)
     rows << create(:row, document: document, mac_address: mac_address_3, visit_data: sep_22_2012)
     rows
   end
@@ -137,12 +135,14 @@ RSpec.describe StatisticService, :type => :model do
     describe "#repeating_visitors_count" do
       it 'returns count of repeating visitors grouped by month', :focus=>true do
         expected_values = monthly_rows.map { |rows| repeating_visitors_count(rows) }
-        expect(monthly_statistic.send(:repeating_visitors_count)).to eq(monthly_values(expected_values))
+        expected_hash   = period_values_without_zeros(monthly_values(expected_values))
+        expect(monthly_statistic.send(:repeating_visitors_count)).to eq(expected_hash)
       end
 
       it 'returns count of repeating visitors grouped by week', :focus=>true do
         expected_values = weekly_rows.map { |rows| repeating_visitors_count(rows) }
-        expect(week_statistic.send(:repeating_visitors_count)).to eq(weekly_values(expected_values))
+        expected_hash   = period_values_without_zeros(weekly_values(expected_values))
+        expect(week_statistic.send(:repeating_visitors_count)).to eq(expected_hash)
       end
     end
 
@@ -176,6 +176,12 @@ RSpec.describe StatisticService, :type => :model do
 
   def repeating_visitors_percent arr
     (100*repeating_visitors_count(arr)/unique_visitors_count(arr).to_f).round(2)
+  end
+
+  # need for testing repeating visitors count
+  # DB query do not selects values contained zeros
+  def period_values_without_zeros hash
+    hash.select { |key, value| value > 0 }
   end
 
   def monthly_values values

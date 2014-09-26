@@ -42,7 +42,7 @@ class StatisticService
   def repeating_visitors_percent
     unique_visitors    = unique_visitors_count
     repeating_visitors = repeating_visitors_count
-    repeating_visitors.update(repeating_visitors){|key,v1| (100*v1/unique_visitors[key]).round(2)}
+    unique_visitors.update(unique_visitors){|key,v1| (100*(repeating_visitors[key] || 0)/v1).round(2)}
   end
 
   private
