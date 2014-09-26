@@ -1,37 +1,58 @@
 <div style="width: 50%; margin: 0 auto;">
-  <div class="btn-group">
-    <button type="button" class="btn btn-primary">Period</button>
-    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-      <span class="caret"></span>
-      <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="?sub=month">Per month</a></li>
-      <li><a href="?sub=week">Per week</a></li>
-      <li><a href="?sub=day">Per day</a></li>
-    </ul>
-    <div style="float:left;margin: 0 10px;">
-      <button class="btn" id="navigationSelector-previous">Previous</button>
-      <button class="btn" id="navigationSelector-next">Next</button>
-      <div class="source"></div>
+  <ul class="nav nav-tabs">
+    <li class="active">
+      <a href="#tab1" data-toggle="tab">
+        Charts
+      </a>
+    </li>
+    <li>
+      <a href="#tab2" data-toggle="tab">
+        Tables
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div id="tab1" class="tab-pane active">
+      <div class="btn-group">
+        <button type="button" class="btn btn-primary">Period</button>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+          <span class="caret"></span>
+          <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="?sub=month">Per month</a></li>
+          <li><a href="?sub=week">Per week</a></li>
+          <li><a href="?sub=day">Per day</a></li>
+        </ul>
+        <div style="float:left;margin: 0 10px;">
+          <button class="btn" id="navigationSelector-previous">Previous</button>
+          <button class="btn" id="navigationSelector-next">Next</button>
+          <div class="source"></div>
+        </div>
+      </div>
+      <div class="stat-block">
+        <h1>average dwell time</h1>
+        <div id="average_dwell_time"></div>
+      </div>
+      <div class="stat-block">
+        <h1>unique visitors</h1>
+        <div id="unique_visitors"></div>
+      </div>
+      <div class="stat-block">
+        <h1>repeating visitors percent</h1>
+        <div id="repeating_visitors"></div>
+      </div>
     </div>
-  </div>
-  <div class="stat-block">
-    <h1>average dwell time</h1>
-    <div id="average_dwell_time"></div>
-  </div>
-  <div class="stat-block">
-    <h1>unique visitors</h1>
-    <div id="unique_visitors"></div>
-  </div>
-  <div class="stat-block">
-    <h1>repeating visitors percent</h1>
-    <div id="repeating_visitors"></div>
+    <div id="tab2" class="tab-pane">
+    </div>
   </div>
 </div>
 <style type="text/css">
   .stat-block {
     padding-bottom: 30px;
+  }
+  .tab-content {
+    padding-top: 20px;
   }
 </style>
 <script type="text/javascript">
