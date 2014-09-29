@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   mount API::Base => '/api'
+  mount Resque::Server, :at => "/resque"
 
   get 'statistic' => 'statistic#index', :as => :statistic
   get 'stat_tables' => 'statistic#stat_tables', :as => :stat_tables

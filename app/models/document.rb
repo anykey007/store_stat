@@ -10,6 +10,12 @@ class Document < ActiveRecord::Base
   private
 
   def create_rows_from_file
-    CreateRowsService.new(self).perform if self.file.present?
+    # only for heroku hack
+    # heroku destroys uploaded files after the request is complet
+    if ENV["HEROKU"] == '1'
+      CreateRowsService.new(self).perform if self.file.present?
+    else
+      CreateRowsWorker.enqueue(self.id) if self.file.present?
+    end
   end
 end

@@ -55,6 +55,11 @@ gem 'slim-rails'
 gem 'paperclip', '~> 4.2'
 gem 'grape'
 
+gem 'resque', require: 'resque/server', branch: '1-x-stable', github: 'resque/resque'
+gem 'resque-scheduler', require: 'resque_scheduler', github: 'jetthoughts/resque-scheduler'
+gem 'resque-loner'
+gem 'resque-status'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_21]
