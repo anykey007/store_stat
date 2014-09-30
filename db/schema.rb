@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926231048) do
+ActiveRecord::Schema.define(version: 20140929140246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,20 @@ ActiveRecord::Schema.define(version: 20140926231048) do
   end
 
   add_index "rows", ["document_id"], name: "index_rows_on_document_id", using: :btree
+
+  create_table "statistics", force: true do |t|
+    t.integer  "store_id"
+    t.datetime "period_start"
+    t.datetime "period_end"
+    t.float    "avg_dwell_time",           default: 0.0
+    t.integer  "unique_visitors_count",    default: 0
+    t.integer  "repeating_visitors_count", default: 0
+    t.string   "period_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "statistics", ["store_id"], name: "index_statistics_on_store_id", using: :btree
 
   create_table "stores", force: true do |t|
     t.string   "name"

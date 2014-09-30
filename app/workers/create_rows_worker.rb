@@ -4,6 +4,7 @@ class CreateRowsWorker
   def self.perform document_id
     document = Document.find(document_id)
     CreateRowsService.new(document).perform
+    UpdateStatisticWorker.enqueue(document_id)
   end
 
   def self.enqueue(document_id)

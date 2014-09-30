@@ -6,7 +6,8 @@ module API
 
     resource :statistic do
       before do
-        @ss = StatisticService.new(sub_domain: params[:sub])
+        store = Store.find(params[:store_id])
+        @ss = StatisticService.new(store, sub_domain: params[:sub])
       end
 
       get :average_dwell_time do

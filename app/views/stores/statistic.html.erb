@@ -76,10 +76,12 @@ $(document).ready(function() {
     $.extend(baseOptions, { domain: "month", range: 4});
   }
 
+  var storeParam = '&store_id='+"<%= raw @store.id %>";
+
   var average_dwell_time = new CalHeatMap();
   average_dwell_time.init($.extend({}, baseOptions, {
     itemSelector: "#average_dwell_time",
-    data: "api/statistic/average_dwell_time?sub=" + baseOptions.subDomain,
+    data: "/api/statistic/average_dwell_time?sub=" + baseOptions.subDomain+storeParam,
     legend: [20, 40, 60, 100],
     itemName: ["minute", "minutes"]
   }));
@@ -87,7 +89,7 @@ $(document).ready(function() {
   var unique_visitors = new CalHeatMap();
   unique_visitors.init($.extend({}, baseOptions, {
     itemSelector: "#unique_visitors",
-    data: "api/statistic/unique_visitors?sub=" + baseOptions.subDomain,
+    data: "/api/statistic/unique_visitors?sub=" + baseOptions.subDomain+storeParam,
     legend: [5, 10, 50, 100],
     itemName: ["visitor", "visitors"]
   }));
@@ -95,7 +97,7 @@ $(document).ready(function() {
   var repeating_visitors = new CalHeatMap();
   repeating_visitors.init($.extend({}, baseOptions, {
     itemSelector: "#repeating_visitors",
-    data: "api/statistic/repeating_visitors?sub=" + baseOptions.subDomain,
+    data: "/api/statistic/repeating_visitors?sub=" + baseOptions.subDomain+storeParam,
     legend: [10, 30, 60, 90],
     itemName: ["%", "%"]
   }));

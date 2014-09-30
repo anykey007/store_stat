@@ -2,17 +2,19 @@ Rails.application.routes.draw do
   mount API::Base => '/api'
   mount Resque::Server, :at => "/resque"
 
-  get 'statistic' => 'statistic#index', :as => :statistic
-  get 'stat_tables' => 'statistic#stat_tables', :as => :stat_tables
-
-  resources :stores
+  resources :stores do
+    member do
+      get :statistic
+      get :stat_tables
+    end
+  end
   resources :documents
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'statistic#index'
+  root 'stores#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

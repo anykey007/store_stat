@@ -1,5 +1,6 @@
 class StoresController < ApplicationController
-  before_action :set_store, only: [:show, :edit, :update, :destroy]
+  before_action :set_store, only: [:show, :edit, :update, :destroy, :statistic, :stat_tables]
+  before_action :set_sub_domain, only: [:statistic, :stat_tables]
 
   # GET /stores
   # GET /stores.json
@@ -61,6 +62,13 @@ class StoresController < ApplicationController
     end
   end
 
+  def statistic
+  end
+
+  def stat_tables
+    render :layout => 'tables'
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_store
@@ -70,5 +78,9 @@ class StoresController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def store_params
       params.require(:store).permit(:name)
+    end
+
+    def set_sub_domain
+      @sub_domain = params[:sub] || 'month'
     end
 end

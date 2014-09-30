@@ -13,7 +13,10 @@ class Document < ActiveRecord::Base
     # only for heroku hack
     # heroku destroys uploaded files after the request is complet
     if ENV["HEROKU"] == '1'
-      CreateRowsService.new(self).perform if self.file.present?
+      if self.file.present?
+        CreateRowsService.new(self).perform
+        UpdateStatisticWorker.enqueue(id)
+      end
     else
       CreateRowsWorker.enqueue(self.id) if self.file.present?
     end

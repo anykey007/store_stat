@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe StatisticService, :type => :model do
-  let!(:document) { create :document }
+  let!(:store) { create :store }
+  let!(:document) { create :document, store: store }
   let!(:mac_address_1) { '34:15:9e:bb:34:7f' }
   let!(:mac_address_2) { '34:15:9e:bb:34:6f' }
   let!(:mac_address_3) { '34:15:9e:bb:34:5f' }
@@ -103,9 +104,12 @@ RSpec.describe StatisticService, :type => :model do
   let!(:weekly_rows)  { [sep_week1_rows, sep_week2_rows, sep_week3_rows, aug_2014_rows,
                          jul_2014_rows, sep_2013_rows, sep_2012_rows] }
 
-  let!(:monthly_statistic) { StatisticService.new(sub_domain: 'month') }
-  let!(:week_statistic)  { StatisticService.new(sub_domain: 'week')  }
-  let!(:perform) { StoreProceduresService.new.perform }
+  let!(:monthly_statistic) { StatisticService.new(store, sub_domain: 'month') }
+  let!(:week_statistic)  { StatisticService.new(store, sub_domain: 'week')  }
+
+  before do
+    UpdateStatisticService.new(document).perform
+  end
 
   describe "#average_dwell_time" do
     it 'counts avarage values grouped by month', :focus=>true do
@@ -135,14 +139,12 @@ RSpec.describe StatisticService, :type => :model do
     describe "#repeating_visitors_count" do
       it 'returns count of repeating visitors grouped by month', :focus=>true do
         expected_values = monthly_rows.map { |rows| repeating_visitors_count(rows) }
-        expected_hash   = period_values_without_zeros(monthly_values(expected_values))
-        expect(monthly_statistic.send(:repeating_visitors_count)).to eq(expected_hash)
+        expect(monthly_statistic.send(:repeating_visitors_count)).to eq(monthly_values(expected_values))
       end
 
       it 'returns count of repeating visitors grouped by week', :focus=>true do
         expected_values = weekly_rows.map { |rows| repeating_visitors_count(rows) }
-        expected_hash   = period_values_without_zeros(weekly_values(expected_values))
-        expect(week_statistic.send(:repeating_visitors_count)).to eq(expected_hash)
+        expect(week_statistic.send(:repeating_visitors_count)).to eq(weekly_values(expected_values))
       end
     end
 
@@ -176,12 +178,6 @@ RSpec.describe StatisticService, :type => :model do
 
   def repeating_visitors_percent arr
     (100*repeating_visitors_count(arr)/unique_visitors_count(arr).to_f).round(2)
-  end
-
-  # need for testing repeating visitors count
-  # DB query do not selects values contained zeros
-  def period_values_without_zeros hash
-    hash.select { |key, value| value > 0 }
   end
 
   def monthly_values values
