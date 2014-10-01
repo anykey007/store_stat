@@ -17,5 +17,4 @@
 //= require d3.v3.min
 //= require cal-heatmap.min
 //= require bootstrap
-//= require documents
 //= require statistics
