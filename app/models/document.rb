@@ -4,6 +4,7 @@ class Document < ActiveRecord::Base
 
   has_attached_file :file
   validates_attachment_content_type :file, :content_type => %w(text/csv)
+  validates :store_id, :presence => true
 
   after_save :create_rows_from_file
 
