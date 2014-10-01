@@ -1,15 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "stores/index", :type => :view do
+RSpec.describe "stores/index", :type => :view, :focus=>true do
   before(:each) do
-    assign(:stores, [
-      Store.create!(
-        :name => "Name"
-      ),
-      Store.create!(
-        :name => "Name"
-      )
-    ])
+    assign(:stores, (create_list :store, 2, name: 'Name'))
   end
 
   it "renders a list of stores" do

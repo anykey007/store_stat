@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "documents/edit", :type => :view do
+RSpec.describe "documents/edit", :type => :view, :focus=>true do
   before(:each) do
-    @document = assign(:document, Document.create!())
+    @document = assign(:document, (create :document))
   end
 
   it "renders the edit document form" do

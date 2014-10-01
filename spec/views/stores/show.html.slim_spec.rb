@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "stores/show", :type => :view do
+RSpec.describe "stores/show", :type => :view, :focus=>true do
   before(:each) do
     @store = assign(:store, Store.create!(
       :name => "Name"

@@ -18,17 +18,17 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-RSpec.describe StoresController, :type => :controller do
+RSpec.describe StoresController, :type => :controller, :focus=>true do
 
   # This should return the minimal set of attributes required to create a valid
   # Store. As you add validations to Store, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { name: Faker::Company.name }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { name: '' }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -40,7 +40,7 @@ RSpec.describe StoresController, :type => :controller do
     it "assigns all stores as @stores" do
       store = Store.create! valid_attributes
       get :index, {}, valid_session
-      expect(assigns(:stores)).to eq([store])
+      expect(assigns(:stores)).to include(store)
     end
   end
 
@@ -103,14 +103,13 @@ RSpec.describe StoresController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: 'New name' }
       }
 
       it "updates the requested store" do
         store = Store.create! valid_attributes
         put :update, {:id => store.to_param, :store => new_attributes}, valid_session
-        store.reload
-        skip("Add assertions for updated state")
+        expect(store.reload.name).to eq('New name')
       end
 
       it "assigns the requested store as @store" do

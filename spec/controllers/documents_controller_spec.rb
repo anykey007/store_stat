@@ -18,17 +18,17 @@ require 'rails_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-RSpec.describe DocumentsController, :type => :controller do
+RSpec.describe DocumentsController, :type => :controller, :focus=>true do
 
   # This should return the minimal set of attributes required to create a valid
   # Document. As you add validations to Document, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { store_id: '1' }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { store_id: '' }
   }
 
   # This should return the minimal set of values that should be in the session
@@ -40,7 +40,7 @@ RSpec.describe DocumentsController, :type => :controller do
     it "assigns all documents as @documents" do
       document = Document.create! valid_attributes
       get :index, {}, valid_session
-      expect(assigns(:documents)).to eq([document])
+      expect(assigns(:documents)).to include(document)
     end
   end
 
@@ -103,14 +103,13 @@ RSpec.describe DocumentsController, :type => :controller do
   describe "PUT update" do
     describe "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { store_id: '2'}
       }
 
       it "updates the requested document" do
         document = Document.create! valid_attributes
         put :update, {:id => document.to_param, :document => new_attributes}, valid_session
-        document.reload
-        skip("Add assertions for updated state")
+        expect(document.reload.store_id).to eq(2)
       end
 
       it "assigns the requested document as @document" do

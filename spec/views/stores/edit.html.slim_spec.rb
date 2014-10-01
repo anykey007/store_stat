@@ -1,10 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe "stores/edit", :type => :view do
+RSpec.describe "stores/edit", :type => :view, :focus=>true do
   before(:each) do
-    @store = assign(:store, Store.create!(
-      :name => "MyString"
-    ))
+    @store = create :store
   end
 
   it "renders the edit store form" do

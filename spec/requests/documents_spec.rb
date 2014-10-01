@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Documents", :type => :request do
+RSpec.describe "Documents", :type => :request, :focus=>true do
   describe "GET /documents" do
     it "works! (now write some real specs)" do
       get documents_path

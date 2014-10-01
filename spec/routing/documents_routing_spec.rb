@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe DocumentsController, :type => :routing do
+RSpec.describe DocumentsController, :type => :routing, :focus=>true do
   describe "routing" do
 
     it "routes to #index" do

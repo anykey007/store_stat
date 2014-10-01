@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe StoresController, :type => :routing do
+RSpec.describe StoresController, :type => :routing, :focus=>true do
   describe "routing" do
 
     it "routes to #index" do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "Stores", :type => :request do
+RSpec.describe "Stores", :type => :request, :focus=>true do
   describe "GET /stores" do
     it "works! (now write some real specs)" do
       get stores_path
