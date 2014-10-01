@@ -12,10 +12,5 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
-//= require turbolinks
 //= require d3.v3.min
-//= require cal-heatmap.min
-//= require bootstrap
-//= require documents
-//= require statistics
+//= require table_statistics

@@ -1,0 +1,20 @@
+// Place all the styles related to the Documents controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.stat-block {
+  padding-bottom: 30px;
+}
+.tab-content {
+  padding-top: 20px;
+}
+#centered-block {
+  width: 50%;
+  margin: 0 auto;
+}
+.navigation-block {
+  float:left;
+  margin: 0 10px;
+}
+#navigationSelector-next {
+  margin-left:3px;
+}

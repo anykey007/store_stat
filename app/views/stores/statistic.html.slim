@@ -1,0 +1,37 @@
+#centered-block data-sub-domain=@sub_domain data-store-id=@store.id
+  ul.nav.nav-tabs
+    li.active
+      a data-toggle="tab" href="#tab1"
+        | Charts
+    li
+      a data-toggle="tab" href="#tab2"
+        | Tables
+  .tab-content
+    #tab1.tab-pane.active
+      .btn-group
+        button.btn.btn-primary type="button"  Period
+        button.btn.btn-primary.dropdown-toggle data-toggle="dropdown" type="button"
+          span.caret
+          span.sr-only Toggle Dropdown
+        ul.dropdown-menu role="menu"
+          li
+            a href="?sub_domain=month"  Per month
+          li
+            a href="?sub_domain=week"  Per week
+          li
+            a href="?sub_domain=day"  Per day
+        .navigation-block
+          button#navigationSelector-previous.btn Previous
+          button#navigationSelector-next.btn Next
+          .source
+      .stat-block
+        h1 average dwell time
+        #average_dwell_time
+      .stat-block
+        h1 unique visitors
+        #unique_visitors
+      .stat-block
+        h1 repeating visitors percent
+        #repeating_visitors
+    #tab2.tab-pane
+      iframe frameborder="0" width="1000" height="600" src="stat_tables?sub_domain=#{@sub_domain}"
