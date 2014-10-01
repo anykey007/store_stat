@@ -81,6 +81,6 @@ class StoresController < ApplicationController
     end
 
     def set_sub_domain
-      @sub_domain = params[:sub] || 'month'
+      @sub_domain = params[:sub_domain] || 'month'
     end
 end

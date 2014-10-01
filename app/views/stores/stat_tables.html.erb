@@ -31,7 +31,7 @@ if(subDomain==='month'){
 } else {
   formatdate = d3.time.format("%b %d %Y");
 }
-d3.json("/api/statistic/all?sub="+subDomain+storeParam, function(error, csv) {
+d3.json("/api/statistic/all?sub_domain="+subDomain+storeParam, function(error, csv) {
   d3.keys(csv.average_dwell_time).forEach(function(key) {
     row = {};
     row.dt = formatdate(new Date(parseInt(key)*1000));
